@@ -7,5 +7,6 @@ namespace WindowsFormsApp1 {
         public static  Boolean Contains(Rectangle  rect, Point point) {
             return rect.Contains(point);
         }
+        
     }
 }

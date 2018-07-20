@@ -1,5 +1,4 @@
-﻿namespace WindowsFormsApp1
-{
+﻿namespace WindowsFormsApp1 {
     partial class Form1
     {
         /// <summary>
@@ -35,8 +34,8 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.panel4 = new System.Windows.Forms.Panel();
+            this.graphPanel = new WindowsFormsApp1.MyPanel();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -135,7 +134,7 @@
             // 
             // splitContainer3.Panel2
             // 
-            this.splitContainer3.Panel2.Controls.Add(this.panel3);
+            this.splitContainer3.Panel2.Controls.Add(this.graphPanel);
             this.splitContainer3.Size = new System.Drawing.Size(850, 375);
             this.splitContainer3.SplitterDistance = 109;
             this.splitContainer3.SplitterWidth = 3;
@@ -151,23 +150,6 @@
             this.panel2.Size = new System.Drawing.Size(109, 375);
             this.panel2.TabIndex = 0;
             // 
-            // panel3
-            // 
-            this.panel3.BackColor = System.Drawing.Color.Silver;
-            this.panel3.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.PHO_20180514_08324500A;
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel3.Location = new System.Drawing.Point(0, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(2);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(738, 375);
-            this.panel3.TabIndex = 0;
-            this.panel3.SizeChanged += new System.EventHandler(this.Panel3_Size_Changed_ReLoad_Gra);
-            this.panel3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Mouse_Down);
-            this.panel3.MouseHover += new System.EventHandler(this.Panel3_Mouse_Hover);
-            this.panel3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Mouse_Move);
-            this.panel3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Mouse_Up);
-            // 
             // panel4
             // 
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -177,6 +159,20 @@
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(850, 64);
             this.panel4.TabIndex = 0;
+            // 
+            // graphPanel
+            // 
+            this.graphPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.graphPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graphPanel.Location = new System.Drawing.Point(0, 0);
+            this.graphPanel.Name = "graphPanel";
+            this.graphPanel.Size = new System.Drawing.Size(738, 375);
+            this.graphPanel.TabIndex = 0;
+            this.graphPanel.SizeChanged += new System.EventHandler(this.Graph_Panel__Size_Changed_ReLoad_Gra);
+            this.graphPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.Graph_Panel_On_Paint);
+            this.graphPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Graph_Panel_Mouse_Down);
+            this.graphPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Graph_Panel_Mouse_Move);
+            this.graphPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Graph_Panel_Mouse_Up);
             // 
             // Form1
             // 
@@ -218,8 +214,8 @@
         private System.Windows.Forms.SplitContainer splitContainer3;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel4;
+        private MyPanel graphPanel;
     }
 }
 
