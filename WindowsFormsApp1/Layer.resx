@@ -117,23 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="PHO_20180514_08324500A" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\PHO_20180514_08324500A.JPG;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="edit" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\edit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="hidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\hidden.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="show" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\show.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="add" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\add.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="minus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\icon\minus.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="button2.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAEpSURBVFhH7ddNSkJRGMbxO9IlNHAXuoaieaG7CTeQq6lGNVDCNSiUU4kGQRg4sv7PQBDOc6/3
+        4xwvSA/8Zu/HJLvvyf5TIV1c4h5zvGOLH6zwiglU00HUDPGB35LWGKFxLvAIt6SMJ2hGrVzhE25wFZqh
+        WZWihh3cwDo06xql0sMX3KAmNFOzj2YGNyCGKQpzA9cYk3bkRr9t1xSTdtgM4BpS0K4gY7jiFLQryDNc
+        cQovCLKEK05Bu4Loo+KKm8bN3CDIN1xx07iZ2hVkAVecgnYFaf2P8A6uOAXtCtKHK05Bu2ze4Bpiyv1X
+        rNzCNcWkHYXRJ9M1xqBP/dG0fpAoOp9in2S17sLWjtJ9dFI/wA0uQ721z/LDtPYwOcz+aabn18mfZuea
+        LPsDm7pCs/VjGjgAAAAASUVORK5CYII=
+</value>
   </data>
 </root>

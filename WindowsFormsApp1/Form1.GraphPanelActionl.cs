@@ -107,6 +107,9 @@ namespace WindowsFormsApp1 {
             //重绘矩形
             //所有矩形需要重绘
             Dictionary<int, Rectangle> temp = new Dictionary<int, Rectangle>();
+            if (rects == null) {
+                return;
+            }
             foreach (int rectKey in rects.Keys) {
                 Rectangle rect = rects[rectKey];
                 rect.X = (int)Math.Round(rects[rectKey].X * xZoom, 0);
@@ -253,6 +256,12 @@ namespace WindowsFormsApp1 {
                 return true;
             }
             return false;
+        }
+        private void AnnoAddBtn_Click(object sender, EventArgs e) {
+            Form2 form2 = new Form2();
+            form2.StartPosition = FormStartPosition.CenterScreen;
+            form2.Show();
+            form2.FormClosed += new FormClosedEventHandler(this.Form2_Colse);
         }
     }
 }
