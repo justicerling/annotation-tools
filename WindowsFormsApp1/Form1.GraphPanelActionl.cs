@@ -16,7 +16,8 @@ namespace WindowsFormsApp1 {
                 ///鼠标的当前位置
                 foreach (int rectKey in rects.Keys) {
                     //贴近边线10px后才可以拖动
-                    Rectangle DragRange = new Rectangle(rects[rectKey].X + 10, rects[rectKey].Y - 10, rects[rectKey].Width - 10, rects[rectKey].Height - 10);
+                    Rectangle drawedRectangle = rects[rectKey].DrawedRectangle;
+                    Rectangle DragRange = new Rectangle(drawedRectangle.X + 10, drawedRectangle.Y - 10, drawedRectangle.Width - 10, drawedRectangle.Height - 10);
                     if (DragRange.Contains(e.Location)) {
                         Cursor.Current = Cursors.SizeAll;
                         drawNewFlag = false;
@@ -24,20 +25,28 @@ namespace WindowsFormsApp1 {
                         currentDragIndex = rectKey;
                         return;
                     }
-                    Rectangle rect = rects[rectKey];
-                    if (IsInZoomRange(rect, e.Location)) {
+                    if (IsInZoomRange(drawedRectangle, e.Location)) {
                         currentZoomRectIndex = rectKey;
                         preZoomPoint = e.Location;
                         return;
                     }
                 }
+                if (currentActivedAnno == null) {
+                    return;
+                }
                 drawNewFlag = true;
+                drawPen = new Pen(currentActivedAnno.Color, 3);
                 fPoint.X = e.X;
                 fPoint.Y = e.Y;
                 //画新矩形 当前下标+1
                 currentIndex++;
                 Rectangle rectangle = new Rectangle(fPoint.X, fPoint.Y, 0, 0);
-                rects.Add(currentIndex, rectangle);
+                Annotation newAnno = new Annotation();
+                newAnno.DrawedRectangle = rectangle;
+                newAnno.Color = currentActivedAnno.Color;
+                newAnno.Name = currentActivedAnno.Name;
+                newAnno.Desc = currentActivedAnno.Desc;
+                rects.Add(currentIndex, newAnno);
                 prePosintion = Cursor.Position;
                 Console.WriteLine("开始坐标：X=" + e.X + ",Y=" + e.Y);
             }
@@ -50,11 +59,13 @@ namespace WindowsFormsApp1 {
             if (currentDragIndex > 0) {
                 //矩形拖拽
                 Console.WriteLine("拖拽矩形INDEX:" + currentDragIndex);
-                Rectangle dragedRect = rects[currentDragIndex];
-                dragedRect.X = dragedRect.X + (cPoint.X - dragPointPre.X);
+                Annotation dragedAnno = rects[currentDragIndex];
+                Rectangle dragedRect = dragedAnno.DrawedRectangle;
+                dragedRect.X = dragedAnno.DrawedRectangle.X + (cPoint.X - dragPointPre.X);
                 dragedRect.Y = dragedRect.Y + (cPoint.Y - dragPointPre.Y);
                 dragPointPre = cPoint;
-                rects[currentDragIndex] = dragedRect;
+                dragedAnno.DrawedRectangle = dragedRect;
+                rects[currentDragIndex] = dragedAnno;
                 graphPanel.Invalidate(true);
                 currentDragIndex = 0;//将当前拖拽的矩形下标置空
                 return;
@@ -180,16 +191,16 @@ namespace WindowsFormsApp1 {
         }
 
         private void Graph_Panel_On_Paint(object sender, PaintEventArgs e) {
-
-            gra = e.Graphics;
-            //重绘背景
-            //gra.FillRectangle(new SolidBrush(Color.LightGray), graphPanel.Location.X, graphPanel.Location.Y, graphPanel.Width, graphPanel.Height);
-            Image image = Image.FromFile("D:\\Users\\tuqiangfan\\source\\repos\\NewRepo\\WindowsFormsApp1\\Resources\\PHO_20180514_08324500A.JPG");
-            Rectangle imageRect = new Rectangle(graphPanel.Location.X, graphPanel.Location.Y, graphPanel.Width, graphPanel.Height);
-            gra.DrawImage(image, imageRect);
-            foreach (int rectKey in rects.Keys) {
-                //Rectangle rect = rects[rectKey];
-                gra.DrawRectangle(drawPen, rects[rectKey]);
+            if (imagePaths != null && imagePaths.Length > 0) {
+                gra = e.Graphics;
+                //重绘背景
+                //gra.FillRectangle(new SolidBrush(Color.LightGray), graphPanel.Location.X, graphPanel.Location.Y, graphPanel.Width, graphPanel.Height);
+                Image image = Image.FromFile(imagePaths[currentImageIdx]);
+                Rectangle imageRect = new Rectangle(graphPanel.Location.X, graphPanel.Location.Y, graphPanel.Width, graphPanel.Height);
+                gra.DrawImage(image, imageRect);
+                foreach (int rectKey in rects.Keys) {
+                    gra.DrawRectangle(drawPen, rects[rectKey]);
+                }
             }
         }
 
@@ -234,7 +245,7 @@ namespace WindowsFormsApp1 {
             rects[currentIndex] = rectangle;
             Console.WriteLine("实际画图坐标：" + rectangle);
         }
-        
+
 
         public Boolean IsInZoomRange(Rectangle rectangle, Point curent) {
             //下边垂直拖放

@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
             this.newROIPanel = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
@@ -32,10 +33,10 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.rectColorlistBox = new System.Windows.Forms.ListBox();
+            this.ractListShowPanel = new WindowsFormsApp1.MyPanel();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.label3 = new System.Windows.Forms.Label();
             this.annoDescTxtBox = new System.Windows.Forms.TextBox();
-            this.ractListShowPanel = new WindowsFormsApp1.MyPanel();
             this.newROIPanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -155,6 +156,16 @@
             this.rectColorlistBox.TabIndex = 2;
             this.rectColorlistBox.SelectedIndexChanged += new System.EventHandler(this.RectColorlistBox_SelectedIndexChanged);
             // 
+            // ractListShowPanel
+            // 
+            this.ractListShowPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ractListShowPanel.BackColor = System.Drawing.Color.White;
+            this.ractListShowPanel.Location = new System.Drawing.Point(133, 20);
+            this.ractListShowPanel.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
+            this.ractListShowPanel.Name = "ractListShowPanel";
+            this.ractListShowPanel.Size = new System.Drawing.Size(80, 50);
+            this.ractListShowPanel.TabIndex = 3;
+            // 
             // flowLayoutPanel3
             // 
             this.newROIPanel.SetColumnSpan(this.flowLayoutPanel3, 2);
@@ -185,22 +196,13 @@
             this.annoDescTxtBox.Size = new System.Drawing.Size(479, 76);
             this.annoDescTxtBox.TabIndex = 2;
             // 
-            // ractListShowPanel
-            // 
-            this.ractListShowPanel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ractListShowPanel.BackColor = System.Drawing.Color.White;
-            this.ractListShowPanel.Location = new System.Drawing.Point(133, 20);
-            this.ractListShowPanel.Margin = new System.Windows.Forms.Padding(3, 20, 3, 3);
-            this.ractListShowPanel.Name = "ractListShowPanel";
-            this.ractListShowPanel.Size = new System.Drawing.Size(80, 50);
-            this.ractListShowPanel.TabIndex = 3;
-            // 
             // Form2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(548, 282);
             this.Controls.Add(this.newROIPanel);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form2";
             this.Text = "自定义标注类型";
