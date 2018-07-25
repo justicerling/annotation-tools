@@ -29,7 +29,6 @@ namespace WindowsFormsApp1 {
         }
 
         private void Form1_Load(object sender, EventArgs e) {
-            //Panel graphPanel = (Panel)(this.Controls.Find("graphPanel", true)[0]);
             gra = Graphics.FromHwnd(graphPanel.Handle);
             panelPreW = graphPanel.Width;
             panelPreH = graphPanel.Height;
@@ -47,17 +46,15 @@ namespace WindowsFormsApp1 {
         public void Form2_Colse(object sender, FormClosedEventArgs e) {
             Form2 form2 = (Form2)sender;
             if (form2.SubmitAnno != null) {
-                Layer layer = new Layer();
-                Console.WriteLine("选择的颜色是:" + form2.SubmitAnno.Color);
-                layer.Dock = DockStyle.Top;
-                layer.AnnoName(form2.SubmitAnno.Name);
-                annoListPanel.Controls.Add(layer);
-                //layer.AnnoColor(ColorTranslator.FromHtml(form2.SubmitAnno.Color));
-                layer.AnnoColor(form2.SubmitAnno.Color);
                 if (annos.ContainsKey(form2.SubmitAnno.Name)) {
                     MessageBox.Show("名称为:" + form2.SubmitAnno.Name + "的标注类型已存在!");
                     return;
                 }
+                Layer layer = new Layer();
+                layer.Dock = DockStyle.Top;
+                layer.AnnoName(form2.SubmitAnno.Name);
+                annoListPanel.Controls.Add(layer);
+                layer.AnnoColor(form2.SubmitAnno.Color);
                 annos.Add(form2.SubmitAnno.Name, form2.SubmitAnno);
                 layer.drawRectBtn.Click += DrawRectBtn_Click;
                 layer.annoToggle.Click += AnnoToggle_Click;
@@ -81,9 +78,8 @@ namespace WindowsFormsApp1 {
                     layer1.BackColor = Color.FromName("Control");
                 }
             }
-
-
         }
+
         private void AnnoToggle_Click(object sender, EventArgs e) {
             Button annoToggle = (Button)sender;
             Layer layer = (Layer)annoToggle.Parent;
@@ -134,6 +130,9 @@ namespace WindowsFormsApp1 {
         }
 
         private void nextImageBtn_Click(object sender, EventArgs e) {
+            if (imagePaths == null || currentImageIdx >= imagePaths.Length - 1) {
+                return;
+            }
             currentImageIdx++;
             updatePagesInfo();
             graphPanel.Invalidate(true);
@@ -149,11 +148,19 @@ namespace WindowsFormsApp1 {
         }
 
         private void removeToolBar_Click(object sender, EventArgs e) {
+            if (!rects[currentSelectedRectKey].Show) {
+                MessageBox.Show("没有任何标注框被选中!");
+                return;
+            }
             rects.Remove(currentSelectedRectKey);
+            currentSelectedRectKey = 0;
             graphPanel.Invalidate(true);
         }
 
         private void showHiddenToolBar_Click(object sender, EventArgs e) {
+            if (currentSelectedRectKey <= 0) {
+                return;
+            }
             updateShowHiddenToolBar();
             rects[currentSelectedRectKey].Show = !rects[currentSelectedRectKey].Show;
             graphPanel.Invalidate(true);

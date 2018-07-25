@@ -218,7 +218,7 @@ namespace WindowsFormsApp1 {
         }
 
         private void Graph_Panel_On_Paint(object sender, PaintEventArgs e) {
-            if (imagePaths != null && imagePaths.Length > 0) {
+            if (imagePaths != null && imagePaths.Length > 0 && currentImageIdx < imagePaths.Length) {
                 gra = e.Graphics;
                 //重绘背景
                 //gra.FillRectangle(new SolidBrush(Color.LightGray), graphPanel.Location.X, graphPanel.Location.Y, graphPanel.Width, graphPanel.Height);
