@@ -44,7 +44,7 @@ namespace WindowsFormsApp1 {
         private void InitializeComponent() {
             this.label1 = new System.Windows.Forms.Label();
             this.drawRectBtn = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.annoToggle = new System.Windows.Forms.Button();
             this.annoShowPanel = new WindowsFormsApp1.MyPanel();
             this.SuspendLayout();
             // 
@@ -74,21 +74,20 @@ namespace WindowsFormsApp1 {
             this.drawRectBtn.TabIndex = 3;
             this.drawRectBtn.UseVisualStyleBackColor = false;
             // 
-            // button3
+            // annoToggle
             // 
-            this.button3.AutoSize = true;
-            this.button3.BackColor = System.Drawing.Color.Transparent;
-            this.button3.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.show;
-            this.button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.button3.Dock = System.Windows.Forms.DockStyle.Right;
-            this.button3.FlatAppearance.BorderSize = 0;
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button3.Location = new System.Drawing.Point(259, 0);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(40, 35);
-            this.button3.TabIndex = 4;
-            this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.annoToggle.AutoSize = true;
+            this.annoToggle.BackColor = System.Drawing.Color.Transparent;
+            this.annoToggle.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.show;
+            this.annoToggle.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.annoToggle.Dock = System.Windows.Forms.DockStyle.Right;
+            this.annoToggle.FlatAppearance.BorderSize = 0;
+            this.annoToggle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.annoToggle.Location = new System.Drawing.Point(259, 0);
+            this.annoToggle.Name = "annoToggle";
+            this.annoToggle.Size = new System.Drawing.Size(40, 35);
+            this.annoToggle.TabIndex = 4;
+            this.annoToggle.UseVisualStyleBackColor = false;
             // 
             // annoShowPanel
             // 
@@ -107,7 +106,7 @@ namespace WindowsFormsApp1 {
             this.Controls.Add(this.annoShowPanel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.drawRectBtn);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.annoToggle);
             this.Name = "Layer";
             this.Size = new System.Drawing.Size(299, 35);
             this.ResumeLayout(false);
@@ -118,7 +117,7 @@ namespace WindowsFormsApp1 {
         #endregion
         private System.Windows.Forms.Label label1;
         public System.Windows.Forms.Button drawRectBtn;
-        private System.Windows.Forms.Button button3;
+        public System.Windows.Forms.Button annoToggle;
         private Rectangle rectangle = new Rectangle(0, 0, 10, 33);
         private MyPanel annoShowPanel;
     }

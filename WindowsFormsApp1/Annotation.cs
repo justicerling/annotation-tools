@@ -8,8 +8,10 @@ namespace WindowsFormsApp1 {
 
         public Color Color { get; set; }
 
-        public String Desc { get ; set ; }
+        public String Desc { get; set; }
 
         public Rectangle DrawedRectangle { get; set; }
+
+        public bool Show { get; set; }
     }
 }

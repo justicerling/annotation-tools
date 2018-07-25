@@ -35,6 +35,8 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.showHiddenToolBar = new System.Windows.Forms.Button();
+            this.removeToolBar = new System.Windows.Forms.Button();
             this.selectAnnoRect = new System.Windows.Forms.Button();
             this.saveWorkBtn = new System.Windows.Forms.Button();
             this.folderOpenBtn = new System.Windows.Forms.Button();
@@ -148,6 +150,8 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.showHiddenToolBar);
+            this.panel1.Controls.Add(this.removeToolBar);
             this.panel1.Controls.Add(this.selectAnnoRect);
             this.panel1.Controls.Add(this.saveWorkBtn);
             this.panel1.Controls.Add(this.folderOpenBtn);
@@ -156,6 +160,32 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1264, 49);
             this.panel1.TabIndex = 0;
+            // 
+            // showHiddenToolBar
+            // 
+            this.showHiddenToolBar.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.show;
+            this.showHiddenToolBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.showHiddenToolBar.FlatAppearance.BorderSize = 0;
+            this.showHiddenToolBar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showHiddenToolBar.Location = new System.Drawing.Point(211, 8);
+            this.showHiddenToolBar.Name = "showHiddenToolBar";
+            this.showHiddenToolBar.Size = new System.Drawing.Size(40, 28);
+            this.showHiddenToolBar.TabIndex = 4;
+            this.showHiddenToolBar.UseVisualStyleBackColor = true;
+            this.showHiddenToolBar.Click += new System.EventHandler(this.showHiddenToolBar_Click);
+            // 
+            // removeToolBar
+            // 
+            this.removeToolBar.BackgroundImage = global::WindowsFormsApp1.Properties.Resources.minus;
+            this.removeToolBar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.removeToolBar.FlatAppearance.BorderSize = 0;
+            this.removeToolBar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.removeToolBar.Location = new System.Drawing.Point(153, 8);
+            this.removeToolBar.Name = "removeToolBar";
+            this.removeToolBar.Size = new System.Drawing.Size(40, 28);
+            this.removeToolBar.TabIndex = 3;
+            this.removeToolBar.UseVisualStyleBackColor = true;
+            this.removeToolBar.Click += new System.EventHandler(this.removeToolBar_Click);
             // 
             // selectAnnoRect
             // 
@@ -288,7 +318,7 @@
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 63.10807F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 36.89193F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 160F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 162F));
             this.tableLayoutPanel1.Controls.Add(this.preImage, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.nextImageBtn, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.pagesInfoLab, 2, 0);
@@ -307,7 +337,7 @@
             this.preImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.preImage.FlatAppearance.BorderSize = 0;
             this.preImage.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.preImage.Location = new System.Drawing.Point(637, 35);
+            this.preImage.Location = new System.Drawing.Point(636, 35);
             this.preImage.Name = "preImage";
             this.preImage.Size = new System.Drawing.Size(55, 23);
             this.preImage.TabIndex = 0;
@@ -321,7 +351,7 @@
             this.nextImageBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.nextImageBtn.FlatAppearance.BorderSize = 0;
             this.nextImageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.nextImageBtn.Location = new System.Drawing.Point(698, 35);
+            this.nextImageBtn.Location = new System.Drawing.Point(697, 35);
             this.nextImageBtn.Name = "nextImageBtn";
             this.nextImageBtn.Size = new System.Drawing.Size(50, 23);
             this.nextImageBtn.TabIndex = 1;
@@ -401,6 +431,8 @@
         private System.Windows.Forms.Button folderOpenBtn;
         private System.Windows.Forms.Button saveWorkBtn;
         private System.Windows.Forms.Button selectAnnoRect;
+        private System.Windows.Forms.Button showHiddenToolBar;
+        private System.Windows.Forms.Button removeToolBar;
     }
 }
 

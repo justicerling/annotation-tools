@@ -9,14 +9,32 @@ namespace WindowsFormsApp1 {
 
         private int currentZoomRectIndex = 0;
         private Point preZoomPoint;
+        private int currentSelectedRectKey;
 
         private void Graph_Panel_Mouse_Down(object sender, MouseEventArgs e) {
 
             if (e.Button == MouseButtons.Left) {
                 ///鼠标的当前位置
                 foreach (int rectKey in rects.Keys) {
+                    if (!rects[rectKey].Show) {
+                        continue;
+                    }
                     //贴近边线10px后才可以拖动
                     Rectangle drawedRectangle = rects[rectKey].DrawedRectangle;
+                    //选中
+                    if (drawedRectangle.Contains(e.Location)) {
+                        if (currentSelectedRectKey == rectKey) {
+                            currentSelectedRectKey = 0;
+                        } else {
+                            currentSelectedRectKey = rectKey;
+                            if (rects[currentSelectedRectKey].Show) {
+                                showHiddenToolBar.BackgroundImage = Properties.Resources.show;
+                            } else {
+                                showHiddenToolBar.BackgroundImage = Properties.Resources.hidden;
+                            }
+                            Console.WriteLine("选中矩形:" + rectKey);
+                        }
+                    }
                     Rectangle DragRange = new Rectangle(drawedRectangle.X + 10, drawedRectangle.Y - 10, drawedRectangle.Width - 10, drawedRectangle.Height - 10);
                     if (DragRange.Contains(e.Location)) {
                         Cursor.Current = Cursors.SizeAll;
@@ -31,11 +49,11 @@ namespace WindowsFormsApp1 {
                         return;
                     }
                 }
-                if (currentActivedAnno == null) {
+                if (currentActivedAnno == null || imagePaths == null || imagePaths.Length == 0) {
                     return;
                 }
                 drawNewFlag = true;
-                drawPen = new Pen(currentActivedAnno.Color, 3);
+                drawPen.Color = currentActivedAnno.Color;
                 fPoint.X = e.X;
                 fPoint.Y = e.Y;
                 //画新矩形 当前下标+1
@@ -46,11 +64,11 @@ namespace WindowsFormsApp1 {
                 newAnno.Color = currentActivedAnno.Color;
                 newAnno.Name = currentActivedAnno.Name;
                 newAnno.Desc = currentActivedAnno.Desc;
+                newAnno.Show = true;
                 rects.Add(currentIndex, newAnno);
                 prePosintion = Cursor.Position;
                 Console.WriteLine("开始坐标：X=" + e.X + ",Y=" + e.Y);
             }
-
         }
 
         private void Graph_Panel_Mouse_Up(object sender, MouseEventArgs e) {
@@ -84,7 +102,7 @@ namespace WindowsFormsApp1 {
             }
 
             if (currentZoomRectIndex > 0) {
-                Rectangle zoomRect = rects[currentZoomRectIndex];
+                Rectangle zoomRect = rects[currentZoomRectIndex].DrawedRectangle;
                 if (Cursor.Current == Cursors.SizeNS) {
                     //垂直拖放
                     zoomRect.Height += cPoint.Y - preZoomPoint.Y;
@@ -99,7 +117,7 @@ namespace WindowsFormsApp1 {
                     zoomRect.Height += cPoint.Y - preZoomPoint.Y;
                 }
                 preZoomPoint = cPoint;
-                rects[currentZoomRectIndex] = zoomRect;
+                rects[currentZoomRectIndex].DrawedRectangle = zoomRect;
                 graphPanel.Invalidate(true);
                 currentZoomRectIndex = 0;
             }
@@ -117,17 +135,19 @@ namespace WindowsFormsApp1 {
             panelPreH = graphPanel.Height;
             //重绘矩形
             //所有矩形需要重绘
-            Dictionary<int, Rectangle> temp = new Dictionary<int, Rectangle>();
+            Dictionary<int, Annotation> temp = new Dictionary<int, Annotation>();
             if (rects == null) {
                 return;
             }
             foreach (int rectKey in rects.Keys) {
-                Rectangle rect = rects[rectKey];
-                rect.X = (int)Math.Round(rects[rectKey].X * xZoom, 0);
-                rect.Y = (int)Math.Round(rects[rectKey].Y * yZoom);
-                rect.Width = (int)Math.Round(rects[rectKey].Width * xZoom);
-                rect.Height = (int)Math.Round(rects[rectKey].Height * yZoom);
-                temp.Add(rectKey, rect);
+                Annotation temAnno = rects[rectKey];
+                Rectangle rect = temAnno.DrawedRectangle;
+                rect.X = (int)Math.Round(rect.X * xZoom, 0);
+                rect.Y = (int)Math.Round(rect.Y * yZoom);
+                rect.Width = (int)Math.Round(rect.Width * xZoom);
+                rect.Height = (int)Math.Round(rect.Height * yZoom);
+                temAnno.DrawedRectangle = rect;
+                temp.Add(rectKey, temAnno);
             }
             rects = temp;
             graphPanel.Invalidate(true);
@@ -139,7 +159,7 @@ namespace WindowsFormsApp1 {
             Point cPoint = e.Location;
             if (e.Button == MouseButtons.Left) {
                 if (drawNewFlag) {
-                    Console.WriteLine("MOVE-画新矩形:index=" + currentIndex);
+                    //Console.WriteLine("MOVE-画新矩形:index=" + currentIndex);
                     //画新的矩形
                     ePoint = e.Location;
                     BeforeDrawRect();
@@ -149,31 +169,38 @@ namespace WindowsFormsApp1 {
                 if (currentDragIndex > 0) {
                     //矩形拖拽
                     Console.WriteLine("MOVE-拖拽矩形INDEX:" + currentDragIndex);
-                    Rectangle dragedRect = rects[currentDragIndex];
+                    Rectangle dragedRect = rects[currentDragIndex].DrawedRectangle;
                     dragedRect.X = dragedRect.X + (cPoint.X - dragPointPre.X);
                     dragedRect.Y = dragedRect.Y + (cPoint.Y - dragPointPre.Y);
                     dragPointPre = cPoint;
-                    rects[currentDragIndex] = dragedRect;
+                    rects[currentDragIndex].DrawedRectangle = dragedRect;
                     graphPanel.Invalidate(true);
                     return;
                 }
                 if (currentZoomRectIndex > 0) {
-                    Rectangle zoomRect = rects[currentZoomRectIndex];
+                    Rectangle zoomRect = rects[currentZoomRectIndex].DrawedRectangle;
                     if (Cursor.Current == Cursors.SizeNS) {
                         //垂直拖放
                         zoomRect.Height += cPoint.Y - preZoomPoint.Y;
+                        if (zoomRect.Height < 0) {
+                            zoomRect.Height = -zoomRect.Height;
+                        }
                     }
                     if (Cursor.Current == Cursors.SizeWE) {
                         //水平拖放
                         zoomRect.Width += cPoint.X - preZoomPoint.X;
+                        if (zoomRect.Width < 0) {
+                            zoomRect.Width = -zoomRect.Width;
+                        }
                     }
                     if (Cursor.Current == Cursors.SizeNWSE) {
                         //东南角拖放
                         zoomRect.Width += cPoint.X - preZoomPoint.X;
                         zoomRect.Height += cPoint.Y - preZoomPoint.Y;
                     }
+                    BeforeDrawRect(preZoomPoint, cPoint);
                     preZoomPoint = cPoint;
-                    rects[currentZoomRectIndex] = zoomRect;
+                    rects[currentZoomRectIndex].DrawedRectangle = zoomRect;
                     graphPanel.Invalidate(true);
                 }
             }
@@ -181,7 +208,7 @@ namespace WindowsFormsApp1 {
 
             if (currentZoomRectIndex == 0) {
                 foreach (int rectKey in rects.Keys) {
-                    Rectangle rectangle = rects[rectKey];
+                    Rectangle rectangle = rects[rectKey].DrawedRectangle;
                     if (IsInZoomRange(rectangle, cPoint)) {
                         //currentZoomRectIndex = rectKey;
                     }
@@ -199,51 +226,60 @@ namespace WindowsFormsApp1 {
                 Rectangle imageRect = new Rectangle(graphPanel.Location.X, graphPanel.Location.Y, graphPanel.Width, graphPanel.Height);
                 gra.DrawImage(image, imageRect);
                 foreach (int rectKey in rects.Keys) {
-                    gra.DrawRectangle(drawPen, rects[rectKey]);
+                    if (rects[rectKey].Show) {
+                        drawPen.Color = rects[rectKey].Color;
+                        gra.DrawRectangle(drawPen, rects[rectKey].DrawedRectangle);
+                        if (currentSelectedRectKey > 0 && currentSelectedRectKey == rectKey) {
+                            gra.FillRectangle(new SolidBrush(Color.FromArgb(128, Color.Orange)), rects[rectKey].DrawedRectangle);
+                        }
+                    }
                 }
             }
         }
 
         private void BeforeDrawRect() {
-            Console.WriteLine("结束坐标：X=" + ePoint.X + ",Y=" + ePoint.Y);
+            BeforeDrawRect(fPoint, ePoint);
+        }
+
+        private void BeforeDrawRect(Point fPoint1, Point ePoint1) {
+            Console.WriteLine("结束坐标：X=" + ePoint1.X + ",Y=" + ePoint1.Y);
             ///边界处理
             int X_R_Boundary = graphPanel.Location.X + graphPanel.Width;
             int X_L_Boundary = graphPanel.Location.X;
             int Y_T_Boundary = graphPanel.Location.Y;
             int Y_B_Boundary = graphPanel.Location.Y + graphPanel.Height;
-            if (ePoint.X >= X_R_Boundary) {
-                ePoint.X = X_R_Boundary - 3;
+            if (ePoint1.X >= X_R_Boundary) {
+                ePoint1.X = X_R_Boundary - 3;
             }
-            if (ePoint.X <= X_L_Boundary) {
-                ePoint.X = X_L_Boundary;
+            if (ePoint1.X <= X_L_Boundary) {
+                ePoint1.X = X_L_Boundary;
             }
-            if (ePoint.Y >= Y_B_Boundary) {
-                ePoint.Y = Y_B_Boundary - 3;
+            if (ePoint1.Y >= Y_B_Boundary) {
+                ePoint1.Y = Y_B_Boundary - 3;
             }
-            if (ePoint.Y <= Y_T_Boundary) {
-                ePoint.Y = Y_T_Boundary;
+            if (ePoint1.Y <= Y_T_Boundary) {
+                ePoint1.Y = Y_T_Boundary;
             }
             ///反向画图处理
-            Rectangle rectangle = rects[currentIndex];
-            if (ePoint.X < fPoint.X) {
-                int tempX = fPoint.X;
-                fPoint.X = ePoint.X;
-                ePoint.X = tempX;
+            Rectangle rectangle = rects[currentIndex].DrawedRectangle;
+            if (ePoint1.X < fPoint1.X) {
+                rectangle.X = ePoint1.X;
+                rectangle.Width = fPoint1.X - ePoint.X;
+            } else {
+                rectangle.X = fPoint1.X;
+                rectangle.Width = ePoint1.X - fPoint1.X;
             }
-            if (ePoint.Y < fPoint.Y) {
-                int tempY = fPoint.Y;
-                fPoint.Y = ePoint.Y;
-                ePoint.Y = tempY;
+            if (ePoint1.Y < fPoint1.Y) {
+                rectangle.Y = ePoint1.Y;
+                rectangle.Height = fPoint1.Y - ePoint1.Y;
+            } else {
+                rectangle.Y = fPoint1.Y;
+                rectangle.Height = ePoint1.Y - fPoint1.Y;
             }
-            rectangle.X = fPoint.X;
-            rectangle.Y = fPoint.Y;
-            rectangle.Width = ePoint.X - fPoint.X;
-            rectangle.Height = ePoint.Y - fPoint.Y;
             if (rectangle.Width == 0 || rectangle.Height == 0) {
                 return;
             }
-            rects[currentIndex] = rectangle;
-            Console.WriteLine("实际画图坐标：" + rectangle);
+            rects[currentIndex].DrawedRectangle = rectangle;
         }
 
 
@@ -254,8 +290,20 @@ namespace WindowsFormsApp1 {
                 Cursor.Current = Cursors.SizeNS;
                 return true;
             }
+            //上边垂直拖放
+            Rectangle topZoomRange = new Rectangle(rectangle.X + 5, rectangle.Y - 5, rectangle.Width - 10, 10);
+            if (topZoomRange.Contains(curent)) {
+                Cursor.Current = Cursors.SizeNS;
+                return true;
+            }
             //右边水平拖放
-            Rectangle leftZoomRange = new Rectangle(rectangle.X + rectangle.Width - 5, rectangle.Y + 5, 10, rectangle.Height - 10);
+            Rectangle rightZoomRange = new Rectangle(rectangle.X + rectangle.Width - 5, rectangle.Y + 5, 10, rectangle.Height - 10);
+            if (rightZoomRange.Contains(curent)) {
+                Cursor.Current = Cursors.SizeWE;
+                return true;
+            }
+            ////左边水平拖放
+            Rectangle leftZoomRange = new Rectangle(rectangle.X - 5, rectangle.Y + 5, 10, rectangle.Height - 10);
             if (leftZoomRange.Contains(curent)) {
                 Cursor.Current = Cursors.SizeWE;
                 return true;

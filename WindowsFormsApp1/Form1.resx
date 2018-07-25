@@ -121,13 +121,6 @@
     <value>17, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="AnnoAddBtn.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAEVJREFUWEdj
-        GAWjgALADsT/oZgNJEBvMOqAUQeMOmDUAcPXATBDaYUJAmyaqImpBkYT4agDRh0w6oBRBwy4A0bBcAAM
-        DACNZlzDc67m9wAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="folderOpenBtn.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAaBJREFUWEft
@@ -139,6 +132,13 @@
         6GlFfV6VmyAo0Oym6BnDJ4tGsAV6FftAB/7AoqEClxa9cI7LFg0VWLfoBb2CBywa+l3WNckH+gug81bn
         pjhNWGExcvrwHVNuxT5ZxAuL4WjAI/x9ncrWZ5zC0NRjuotlNuqi2426+OaJE4v9ALyTqjCP459vAAAA
         AElFTkSuQmCC
+</value>
+  </data>
+  <data name="AnnoAddBtn.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAEVJREFUWEdj
+        GAWjgALADsT/oZgNJEBvMOqAUQeMOmDUAcPXATBDaYUJAmyaqImpBkYT4agDRh0w6oBRBwy4A0bBcAAM
+        DACNZlzDc67m9wAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

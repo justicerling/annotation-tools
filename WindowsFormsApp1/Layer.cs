@@ -9,19 +9,9 @@ namespace WindowsFormsApp1 {
             this.Actived = false;
         }
 
-        private bool showHiddenToggle = true;
+        public bool ShowHiddenToggle { get; set; }
         public bool DrawActived { get; set; }
         public Boolean Actived { get; set; }
-
-        private void button3_Click(object sender, EventArgs e) {
-            if (showHiddenToggle) {
-                button3.BackgroundImage = Properties.Resources.hidden;
-            } else {
-                button3.BackgroundImage = Properties.Resources.show;
-            }
-            showHiddenToggle = !showHiddenToggle;
-        }
-
 
        
     }

@@ -42,9 +42,9 @@ namespace WindowsFormsApp1 {
                 return;
             }
             Annotation anno = new Annotation();
-            String hexColor = ColorTranslator.ToHtml(listBoxColorMap[rectColorlistBox.SelectedIndex]);
-            Console.WriteLine("提交的颜色是:" + hexColor);
-            anno.Color = hexColor;
+            //String hexColor = ColorTranslator.ToHtml();
+            //Console.WriteLine("提交的颜色是:" + hexColor);
+            anno.Color = listBoxColorMap[rectColorlistBox.SelectedIndex];
             anno.Name = categoryName.Text;
             anno.Desc = annoDescTxtBox.Text;
             this.SubmitAnno = anno;

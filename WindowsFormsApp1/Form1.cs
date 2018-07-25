@@ -52,13 +52,15 @@ namespace WindowsFormsApp1 {
                 layer.Dock = DockStyle.Top;
                 layer.AnnoName(form2.SubmitAnno.Name);
                 annoListPanel.Controls.Add(layer);
-                layer.AnnoColor(ColorTranslator.FromHtml(form2.SubmitAnno.Color));
+                //layer.AnnoColor(ColorTranslator.FromHtml(form2.SubmitAnno.Color));
+                layer.AnnoColor(form2.SubmitAnno.Color);
                 if (annos.ContainsKey(form2.SubmitAnno.Name)) {
                     MessageBox.Show("名称为:" + form2.SubmitAnno.Name + "的标注类型已存在!");
                     return;
                 }
                 annos.Add(form2.SubmitAnno.Name, form2.SubmitAnno);
                 layer.drawRectBtn.Click += DrawRectBtn_Click;
+                layer.annoToggle.Click += AnnoToggle_Click;
             }
         }
 
@@ -73,6 +75,34 @@ namespace WindowsFormsApp1 {
                 currentActivedAnno = annos[layer.getAnnoName()];
             }
             layer.DrawActived = !layer.DrawActived;
+            Panel annoListPanel = (Panel)layer.Parent;
+            foreach (Control layer1 in annoListPanel.Controls) {
+                if (!layer1.Equals(layer)) {
+                    layer1.BackColor = Color.FromName("Control");
+                }
+            }
+
+
+        }
+        private void AnnoToggle_Click(object sender, EventArgs e) {
+            Button annoToggle = (Button)sender;
+            Layer layer = (Layer)annoToggle.Parent;
+            if (layer.ShowHiddenToggle) {
+                annoToggle.BackgroundImage = Properties.Resources.hidden;
+            } else {
+                annoToggle.BackgroundImage = Properties.Resources.show;
+            }
+            layer.ShowHiddenToggle = !layer.ShowHiddenToggle;
+            int count = 0;
+            foreach (Annotation anno in rects.Values) {
+                if (anno.Name.Equals(layer.getAnnoName())) {
+                    anno.Show = layer.ShowHiddenToggle;
+                    count++;
+                }
+            }
+            if (count > 0) {
+                graphPanel.Invalidate(true);
+            }
         }
 
         private void ImportImageFolder_Click(object sender, EventArgs e) {
@@ -118,6 +148,22 @@ namespace WindowsFormsApp1 {
             graphPanel.Invalidate(true);
         }
 
+        private void removeToolBar_Click(object sender, EventArgs e) {
+            rects.Remove(currentSelectedRectKey);
+            graphPanel.Invalidate(true);
+        }
 
+        private void showHiddenToolBar_Click(object sender, EventArgs e) {
+            updateShowHiddenToolBar();
+            rects[currentSelectedRectKey].Show = !rects[currentSelectedRectKey].Show;
+            graphPanel.Invalidate(true);
+        }
+        private void updateShowHiddenToolBar() {
+            if (rects[currentSelectedRectKey].Show) {
+                showHiddenToolBar.BackgroundImage = Properties.Resources.hidden;
+            } else {
+                showHiddenToolBar.BackgroundImage = Properties.Resources.show;
+            }
+        }
     }
 }
